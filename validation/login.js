@@ -5,8 +5,6 @@ const isEmpty = require('./isEmpty');
 module.exports = function (data) {
     let errors = {};
 
-    var test = 2;
-
     data.password = isEmpty(data.password) ? "" : data.password;
     data.email = isEmpty(data.email) ? "" : data.email;
 
