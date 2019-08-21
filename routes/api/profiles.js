@@ -147,7 +147,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
                             new Profile(profileFields).save().then(profile => res.json(profile))
                         }
                     })
-            }
+            } 
         })
 });
 
