@@ -66,10 +66,10 @@ router.get('/all', (req, res) => [
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     const {errors, isValid} = validateProfile(req.body);
-    if (!isValid) {
-        return res.status(400).res.json(errors);
-    }
 
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
     const profileFields = {};
     profileFields.user = req.user.id;
 

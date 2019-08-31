@@ -7,6 +7,7 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import {setCurrentUser} from "./actions/authActions";
 import {logOutUser} from "./actions/authActions";
+import {clearCurrentProfile} from "./actions/profileActions";
 
 if(localStorage.jwtToken){
     setAuthToken(localStorage.jwtToken);
@@ -14,6 +15,7 @@ if(localStorage.jwtToken){
     store.dispatch(setCurrentUser(decoded));
     const currentTime = Date.now()/1000;
     if(decoded.exp < currentTime){
+        clearCurrentProfile();
         store.dispatch(logOutUser());
         window.location.href = '/login'
     }

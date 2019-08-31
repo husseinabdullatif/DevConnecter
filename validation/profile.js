@@ -24,11 +24,11 @@ module.exports = function (data) {
     }
 
     if (validator.isEmpty(data.status)) {
-        errors.handle = 'status field handle is required';
+        errors.status = 'status field handle is required';
     }
 
     if (validator.isEmpty(data.skills)) {
-        errors.handle = 'skills field handle is required';
+        errors.skills = 'skills field handle is required';
     }
     //social
     if (!isEmpty(data.linkedin)) {

@@ -4,12 +4,14 @@ import '../../style/navbar.css';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {logOutUser} from "../../actions/authActions";
+import {clearCurrentProfile} from "../../actions/profileActions";
 
 class Navbar extends Component {
-    onLogOutClick(e){
+    onLogOutClick(e) {
         e.preventDefault();
         this.props.logOutUser();
     }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const authLinks = (
@@ -20,7 +22,7 @@ class Navbar extends Component {
                             src={user.avatar}
                             alt={user.name}
                             className="rounded-circle"
-                            style={{width:"25px", marginRight: "5px"}}
+                            style={{width: "25px", marginRight: "5px"}}
                         />
                         Logout
                     </a>
@@ -56,7 +58,7 @@ class Navbar extends Component {
                                 </li>
                             </ul>
                             {
-                                isAuthenticated? authLinks : guestLinks
+                                isAuthenticated ? authLinks : guestLinks
                             }
                         </div>
                     </div>
@@ -68,14 +70,16 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  logOutUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    logOutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    clearCurrentProfile: PropTypes.func.isRequired
 };
 
 
-function mapStateToProps(state){
-    return{
+function mapStateToProps(state) {
+    return {
         auth: state.auth
     }
 }
-export default connect(mapStateToProps, {logOutUser})(Navbar);
+
+export default connect(mapStateToProps, {logOutUser, clearCurrentProfile})(Navbar);

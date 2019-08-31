@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loginUser} from '../../actions/authActions';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import {withRouter} from 'react-router-dom';
+import TextField from '../common/TextFieldGroup';
 
 class Login extends Component {
     constructor() {
@@ -16,13 +16,15 @@ class Login extends Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    componentDidMount(){
-        if(this.props.auth.isAuthenticated){
+
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated) {
             this.props.history.push('/dashboard');
         }
     }
+
     componentWillReceiveProps(nextProps) {
-        if(nextProps.auth.isAuthenticated){
+        if (nextProps.auth.isAuthenticated) {
             this.props.history.push('./dashboard');
         }
         if (nextProps.errors) {
@@ -55,34 +57,21 @@ class Login extends Component {
                     <h1 className="text-center">Login</h1>
                     <p className="text-center">Create your DevConnector account</p>
                     <form onSubmit={this.onSubmit}>
-                        <div className="form-group">
-                            <input
-                                name="email"
-                                type="email"
-                                className={classnames('form-control', {
-                                    'is-invalid': errors.email
-                                })}
-                                id="email-address"
-                                placeholder="Enter email"
-                                onChange={this.onChange}
-                            />
-                            <small className="form-text text-muted">We'll never share your email with
-                                This site uses Gravatar so if you want a profile image, use a Gravatar email
-                            </small>
-                            <div className='invalid-feedback'>{errors.email}</div>
-                        </div>
-                        <div className="form-group">
-                            <input
-                                name="password"
-                                type="password"
-                                className={classnames('form-control', {
-                                    'is-invalid': errors.password
-                                })}
-                                placeholder="password"
-                                onChange={this.onChange}
-                            />
-                            <div className='invalid-feedback'>{errors.password}</div>
-                        </div>
+                        <TextField value={this.state.email}
+                                   placeholder="email"
+                                   name="email"
+                                   type="email"
+                                   error={errors.email}
+                                   onChange={this.onChange}
+                        />
+                        <TextField value={this.state.password}
+                                   name="password"
+                                   type="password"
+                                   error={errors.password}
+                                   onChange={this.onChange}
+                                   placeholder="Password"
+                        />
+
                         <button type="submit" className="btn btn-info btn-block mt-4">submit</button>
                     </form>
                 </div>
