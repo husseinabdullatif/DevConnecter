@@ -17,7 +17,10 @@ class Navbar extends Component {
         const authLinks = (
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <a href="#" onClick={this.onLogOutClick.bind(this)} className="nav-link">
+                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="" onClick={this.onLogOutClick.bind(this)} className="nav-link">
                         <img
                             src={user.avatar}
                             alt={user.name}
@@ -25,7 +28,7 @@ class Navbar extends Component {
                             style={{width: "25px", marginRight: "5px"}}
                         />
                         Logout
-                    </a>
+                    </Link>
                 </li>
             </ul>
         );
@@ -52,7 +55,7 @@ class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="collapse">
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <Link to="" className="nav-link">
+                                    <Link to="/profiles" className="nav-link">
                                         Developers
                                     </Link>
                                 </li>

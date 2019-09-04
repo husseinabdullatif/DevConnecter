@@ -4,22 +4,25 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import {Link} from 'react-router-dom';
-import ProfileActions from './profileActions';
+import ProfileActions from './ProfileActions';
+import Experience from './Experience';
+import Education from './Education';
+import {withRouter} from 'react-router-dom';
 
 class Dashboard extends Component {
     componentDidMount() {
         this.props.getCurrentProfile();
     }
 
-    onDeleteAccount(e) {
-        this.props.deleteAccount();
+    onDeleteAccount() {
+        this.props.deleteAccount(this.props.history);
     }
 
     render() {
         const {user} = this.props.auth;
-        const {profile, loading} = this.props.profile;
+        const {profile} = this.props.profile;
         let dashboardContent;
-        if (profile === null || loading) {
+        if (profile === null) {
             dashboardContent = <Spinner/>
         }
         else {
@@ -30,9 +33,11 @@ class Dashboard extends Component {
                             Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
                         </p>
                         <ProfileActions/>
+                        <Experience experience={profile.experience}/>
+                        <Education education={profile.education}/>
                         <div className="mt-2 mb-2">
-                            <button type="button" onClick={this.onDeleteAccount.bind(this)} className="btn btn-danger">Delete my
-                                account
+                            <button type="button" onClick={this.onDeleteAccount.bind(this)}
+                                    className="btn btn-danger">Delete my account
                             </button>
                         </div>
                     </div>
@@ -71,4 +76,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {getCurrentProfile, deleteAccount})(Dashboard);
+export default connect(mapStateToProps, {getCurrentProfile, deleteAccount})(withRouter(Dashboard));

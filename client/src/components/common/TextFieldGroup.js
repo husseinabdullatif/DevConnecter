@@ -8,7 +8,8 @@ export default function ({
                              onChange,
                              placeholder,
                              value,
-                             info
+                             info,
+                             disabled
                          }) {
     return (
         <div className="form-group">
@@ -21,6 +22,7 @@ export default function ({
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
+                disabled={disabled}
             />
             {info && <small className="form-text text-muted">{info}</small>}
             <div className='invalid-feedback'>{error}</div>

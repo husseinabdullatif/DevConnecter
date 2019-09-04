@@ -12,7 +12,7 @@ export default function ({
                          }) {
     return (
         <div className="form-group">
-            <input
+            <textarea
                 name={name}
                 className={classnames('form-control', {
                     'is-invalid': error

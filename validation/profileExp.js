@@ -7,7 +7,6 @@ module.exports = function (data) {
 
     data.title = isEmpty(data.title) ? "" : data.title;
     data.company = isEmpty(data.company) ? "" : data.company;
-    data.location = isEmpty(data.location) ? "" : data.location;
     data.from = isEmpty(data.from) ? "" : data.from;
 
     if (validator.isEmpty(data.title)) {
@@ -15,9 +14,6 @@ module.exports = function (data) {
     }
     if (validator.isEmpty(data.company)) {
         errors.company = "company field is required"
-    }
-    if (validator.isEmpty(data.location)) {
-        errors.location = "location field is required"
     }
     if (validator.isEmpty(data.from)) {
         errors.from = "from field is required"

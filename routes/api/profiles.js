@@ -33,10 +33,9 @@ router.get('/handle/:handle', (req, res) => {
                 return res.json(profile)
             } else {
                 errors.noProfile = 'there is no profile for this user';
-                res.status(404).json(errors);
+                return res.status(404).json(errors);
             }
         })
-
 });
 
 router.get('/user/:id', (req, res) => {
@@ -50,18 +49,13 @@ router.get('/user/:id', (req, res) => {
 
 });
 
-router.get('/all', (req, res) => [
+router.get('/all', (req, res) => {
     Profile.find()
         .populate('user', ['name', 'avatar'])
         .then(profiles => {
-            let errors = {};
-            errors.profiel = 'there is no profiles';
-            if (!profiles) {
-                return res.status(404).json(errors);
-            }
             return res.json(profiles);
         })
-]);
+});
 
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
@@ -96,25 +90,6 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     }
     if (req.body.githubusername) {
         profileFields.githubusername = req.body.githubusername
-    }
-    //experience
-    if (req.body.title) {
-        profileFields.experience.title = req.body.title
-    }
-    if (req.body.company) {
-        profileFields.experience.company = req.body.company
-    }
-    if (req.body.location) {
-        profileFields.experience.location = req.body.location
-    }
-    if (req.body.from) {
-        profileFields.experience.from = req.body.from
-    }
-    if (req.body.to) {
-        profileFields.experience.to = req.body.to
-    }
-    if (req.body.current) {
-        profileFields.experience.current = req.body.current
     }
     //social
     profileFields.social = {};
@@ -212,7 +187,7 @@ router.delete('/experience/:exp_id', passport.authenticate('jwt', {session: fals
 router.delete('/education/:edu_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Profile.findOne({user: req.user.id})
         .then(profile => {
-            const deletedEducation = profile.education.map(item => item.id).indexOf(req.params.exp_id);
+            const deletedEducation = profile.education.map(item => item.id).indexOf(req.params.edu_id);
             profile.education.splice(deletedEducation,1);
             profile.save().then(res.json(profile));
         }).catch(err => res.status(404).json(err));
