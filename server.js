@@ -16,10 +16,10 @@ mongoose.connect(mongodbKey)
 
 const app = express();
 
-// support parsing of application/json type post data
+// support parsing of application/json type posts data
 app.use(bodyParser.json());
 
-//support parsing of application/x-www-form-urlencoded post data
+//support parsing of application/x-www-form-urlencoded posts data
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(passport.initialize());

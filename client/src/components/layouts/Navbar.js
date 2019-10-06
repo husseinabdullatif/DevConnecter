@@ -20,6 +20,9 @@ class Navbar extends Component {
                     <Link className="nav-link" to="/dashboard">Dashboard</Link>
                 </li>
                 <li className="nav-item">
+                    <Link className="nav-link" to="/feed">Post Feed</Link>
+                </li>
+                <li className="nav-item">
                     <Link to="" onClick={this.onLogOutClick.bind(this)} className="nav-link">
                         <img
                             src={user.avatar}
@@ -45,7 +48,7 @@ class Navbar extends Component {
         );
 
         return (
-            <header>
+            <header className="mb-4">
                 <nav className="navbar navbar-expand-md bg-dark navbar-dark">
                     <div className="container">
                         <Link to="/" className="navbar-brand">DevConnector</Link>

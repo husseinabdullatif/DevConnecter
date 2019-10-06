@@ -143,7 +143,6 @@ export const getProfileByHandle = (handle) => dispatch => {
             })
         })
         .catch(err => {
-            console.log(err.response.data);
             dispatch({
                 type: GET_PROFILE,
                 payload: null

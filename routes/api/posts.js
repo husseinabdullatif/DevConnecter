@@ -24,18 +24,18 @@ router.get('/', (req, res) => {
         })
     // .catch(err => res.status(404).json({noPosts: 'there is no posts'}));
 });
-//get a single post
+//get a single posts
 //access public
 //get api/posts/:post_id
 router.get('/:post_id', (req, res) => {
     Post.findOne({_id: req.params.post_id})
         .then(post => {
             res.json(post);
-        }).catch(err => res.status(404).json({noPostFound: 'no post found with that id'}));
+        }).catch(err => res.status(404).json({noPostFound: 'no posts found with that id'}));
 });
-//create a post
+//create a posts
 //access private
-//post api/posts/
+//posts api/posts/
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     const {errors, isValid} = validatePost(req.body);
     if (!isValid) {
@@ -50,24 +50,24 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     };
     new Post(newPost).save().then(post => res.json(post));
     // Post.findOne({user: req.user.id})
-    //     .then(post => {
-    //         if (!post) {
-    //             new Post(newPost).save().then(post => res.json(post));
+    //     .then(posts => {
+    //         if (!posts) {
+    //             new Post(newPost).save().then(posts => res.json(posts));
     //         }
     //         else{
     //             Post.findOneAndUpdate({user: req.user.id}, {$set:newPost},{new: true})
-    //                 .then(post => res.json(post));
+    //                 .then(posts => res.json(posts));
     //         }
     //     })
 });
-//delete a post
+//delete a posts
 //access private
 //delete api/posts/:post_id
 router.delete('/:post_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Post.findById(req.params.post_id)
         .then(post => {
                 if (!post) {
-                    return res.status(404).json({noPost: 'there is no post with that id'})
+                    return res.status(404).json({noPost: 'there is no posts with that id'})
                 }
                 else {
                     if (post.user.toString() !== req.user.id) {
@@ -81,32 +81,32 @@ router.delete('/:post_id', passport.authenticate('jwt', {session: false}), (req,
             res.json({wrongId: 'this id is wrong'})
         });
 });
-//like a post
+//like a posts
 //access private
-//post api/posts/like/:post_id
+//posts api/posts/like/:post_id
 router.post('/like/:post_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Post.findById(req.params.post_id)
         .then(post => {
                 if (!post) {
-                    return res.status(404).json({noPost: 'there is no post with that id'})
+                    return res.status(404).json({noPost: 'there is no posts with that id'})
                 }
                 else {
                     if (post.like.filter(item => item.user.toString() === req.user.id)
                         .length > 0) {
-                        res.status(400).json({liked: 'you already liked this post'});
+                        res.status(400).json({liked: 'you already liked this posts'});
                     }
                     else {
                         post.like.unshift({user: req.user.id});
                         post.save().then(post => res.json(post));
                     }
-                    // const likeOrDislike = post.like.map(item => item.user).toString().indexOf(req.user.id);
+                    // const likeOrDislike = posts.like.map(item => item.user).toString().indexOf(req.user.id);
                     // if (likeOrDislike === -1) {
-                    //     post.like.unshift({user: req.user.id});
-                    //     post.save().then(post => res.json(post));
+                    //     posts.like.unshift({user: req.user.id});
+                    //     posts.save().then(posts => res.json(posts));
                     // }
                     // else {
-                    //     post.like.splice(likeOrDislike, 1);
-                    //     post.save().then(post => res.json(post));
+                    //     posts.like.splice(likeOrDislike, 1);
+                    //     posts.save().then(posts => res.json(posts));
                     // }
                 }
             }
@@ -120,14 +120,14 @@ router.post('/like/:post_id', passport.authenticate('jwt', {session: false}), (r
             }
         });
 });
-//unlike a post
+//unlike a posts
 //access private
-//post api/posts/unlike/:post_id
+//posts api/posts/unlike/:post_id
 router.post('/unlike/:post_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Post.findById(req.params.post_id)
         .then(post => {
                 if (!post) {
-                    return res.status(404).json({noPost: 'there is no post with that id'})
+                    return res.status(404).json({noPost: 'there is no posts with that id'})
                 }
                 else {
                     if (post.like.filter(item => item.user.toString() === req.user.id)
@@ -137,7 +137,7 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', {session: false}), 
                         post.save().then(post => res.json(post));
                     }
                     else {
-                        res.status(400).json({unliked: 'you already unliked this post'})
+                        res.status(400).json({unliked: 'you already unliked this posts'})
                     }
                 }
             }
@@ -151,14 +151,14 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', {session: false}), 
             }
         });
 });
-//comment on a post
+//comment on a posts
 //access private
-//post api/posts/comment/:post_id
+//posts api/posts/comment/:post_id
 router.post('/comment/:post_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Post.findById(req.params.post_id)
         .then(post => {
                 if (!post) {
-                    return res.status(404).json({noPost: 'there is no post with that id'})
+                    return res.status(404).json({noPost: 'there is no posts with that id'})
                 }
                 else {
                     const newComment = {
@@ -182,14 +182,14 @@ router.post('/comment/:post_id', passport.authenticate('jwt', {session: false}),
             }
         });
 });
-//uncomment on a post
+//uncomment on a posts
 //access private
-//post api/posts/uncomment/:post_id/:comment_id
+//posts api/posts/uncomment/:post_id/:comment_id
 router.post('/uncomment/:post_id/:comment_id', passport.authenticate('jwt', {session: false}), (req, res) => {
     Post.findById(req.params.post_id)
         .then(post => {
             if (!post) {
-                return res.status(404).json({noPost: 'there is no post with that id'})
+                return res.status(404).json({noPost: 'there is no posts with that id'})
             }
             else {
                 let errors = {};

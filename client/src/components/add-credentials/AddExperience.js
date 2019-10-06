@@ -27,6 +27,11 @@ class AddExperience extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
+        if(this.state.to == null && this.state.current=== false){
+            return(
+                console.log('3det')
+            )
+        }
         const expData = {
             company: this.state.company,
             title: this.state.title,
